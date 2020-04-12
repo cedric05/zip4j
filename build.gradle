@@ -17,7 +17,7 @@ group 'com.codebuds'
 archivesBaseName = 'zip4j'
 
 def mainVersion = '0.1'
-def buildNumber = '3'
+def buildNumber = '4'
 
 version = "${mainVersion}.${buildNumber}"
 def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN") ?: ""
@@ -44,9 +44,9 @@ githubRelease {
     owner "cedric05"
     repo "zip4j"
     targetCommitish "master" // by default this is set to "master"
-    releaseAssets "$buildDir/libs"
+    releaseAssets "$project.buildDir.absolutePath/libs"
     overwrite false
-    dryRun false
+    dryRun true
 }
 
 
@@ -60,7 +60,7 @@ test {
 task srcZip(type: Zip) {
     classifier = 'src'
     from sourceSets*.allSource
-    destinationDirectory = file("$buildDir/libs")
+    destinationDirectory = file("$project.buildDir.absolutePath/libs")
 }
 
 task increment {
