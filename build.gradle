@@ -20,8 +20,7 @@ def mainVersion = '0.1'
 def buildNumber = '0'
 
 version = "${mainVersion}.${buildNumber}"
-def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN", "")
-
+def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN") ?: ""
 publishing {
     repositories {
         maven {
@@ -42,13 +41,13 @@ publishing {
 
 githubRelease {
     token oauthtoken
-    owner "cedric05" 
-    repo "zip4j" 
+    owner "cedric05"
+    repo "zip4j"
     tagName "v1.0.0" // by default this is set to "v${project.version}"
     targetCommitish "master" // by default this is set to "master"
     releaseAssets "$buildDir/libs"
     overwrite false
-    dryRun true
+    dryRun false
 }
 
 
@@ -56,7 +55,7 @@ test {
     reports {
         junitXml.enabled = true
         html.enabled = false
-    }               
+    }
 }
 
 task srcZip(type: Zip) {
