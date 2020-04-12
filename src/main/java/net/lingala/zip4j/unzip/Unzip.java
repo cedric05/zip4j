@@ -153,6 +153,13 @@ public class Unzip {
 				}
 			} else {
 				//Create Directories
+				if(unzipParameters.isFreshen()){
+					File file = new File(outPath, fileHeader.getFileName());
+					if(file.exists() && file.lastModified() > fileHeader.getLastModFileTime()){
+						// Freshen is enabled new file exists and modified time is greater than of zipped
+						return;
+					}
+				}
 				checkOutputDirectoryStructure(fileHeader, outPath, newFileName);
 				
 				UnzipEngine unzipEngine = new UnzipEngine(zipModel, fileHeader);
