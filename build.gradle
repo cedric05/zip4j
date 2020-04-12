@@ -46,7 +46,7 @@ githubRelease {
     targetCommitish "master" // by default this is set to "master"
     releaseAssets "$project.buildDir.absolutePath/libs"
     overwrite false
-    dryRun true
+    dryRun false
 }
 
 
