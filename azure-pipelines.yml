@@ -33,4 +33,4 @@ steps:
     git config --global user.name "automated"
     git add build.gradle
     git commit -m "[skip ci]"
-    git push origin master
+    git push origin HEAD:master
