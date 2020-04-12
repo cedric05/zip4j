@@ -1,7 +1,6 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,7 +14,11 @@ dependencies {
 
 group 'com.codebuds'
 archivesBaseName = 'zip4j'
-version '0.1.1'
+
+def mainVersion = '0.1'
+def buildNumber = '0'
+
+version = "${mainVersion}.${buildNumber}"
 
 
 publishing {
@@ -33,5 +36,29 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+
+test {
+    reports {
+        junitXml.enabled = true
+        html.enabled = false
+    }               
+}
+
+task srcZip(type: Zip) {
+    classifier = 'src'
+    from sourceSets*.allSource
+}
+
+task increment {
+    group 'Build Setup'
+    description 'Increases the Buildnumber'
+    doLast {
+        def bn = buildFile.getText().find(buildNumber) //get this build file's text and extract the buildNumber
+        int inc = bn.toInteger() + 1
+        String s = buildFile.getText().replaceFirst("def buildNumber = '" + bn + "'", "def buildNumber = '" + inc + "'")
+        buildFile.setText(s) //replace the build file's text
     }
 }

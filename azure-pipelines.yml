@@ -10,6 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- bash: |
+    echo VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+    echo "##vso[task.setvariable variable=zip4jversion]$VERSION"
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -18,6 +21,29 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    tasks: 'build publish'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'build srcZip publish increment'
   env:
     TOKEN: $(github-publish-token)
+- task: GithubRelease@0 
+  displayName: 'Create GitHub Release'      
+  inputs:
+    gitHubConnection: cedric05
+    repositoryName: cedric05/zip4j
+    action: create
+    tagSource: auto
+    tag: $(zip4jversion)
+    assets: |
+      build/libs/*
+      build/distributions/*
+- task:
+  - checkout: self
+    persistCredentials: true
+    clean: true
+  - script: |
+      git config --global user.email "kesavarapu.siva@gmail.com"
+      git config --global user.name "automated"
+      git add build.gradle
+      git commit -m "[skip ci]"
+      git push origin master
