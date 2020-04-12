@@ -17,18 +17,27 @@
 package net.lingala.zip4j.model;
 
 public class UnzipParameters {
-	
+
 	private boolean ignoreReadOnlyFileAttribute;
 	private boolean ignoreHiddenFileAttribute;
 	private boolean ignoreArchiveFileAttribute;
 	private boolean ignoreSystemFileAttribute;
 	private boolean ignoreAllFileAttributes;
 	private boolean ignoreDateTimeAttributes;
-	
+	private boolean freshen;
+
 	public boolean isIgnoreReadOnlyFileAttribute() {
 		return ignoreReadOnlyFileAttribute;
 	}
-	
+
+	public boolean isFreshen() {
+		return freshen;
+	}
+
+	public void setFreshen(boolean freshen) {
+		this.freshen = freshen;
+	}
+
 	public void setIgnoreReadOnlyFileAttribute(boolean ignoreReadOnlyFileAttribute) {
 		this.ignoreReadOnlyFileAttribute = ignoreReadOnlyFileAttribute;
 	}
