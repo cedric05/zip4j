@@ -40,9 +40,9 @@ steps:
       build/libs/*
       build/distributions/*
 - task:
-  - script: |
-      git config --global user.email "kesavarapu.siva@gmail.com"
-      git config --global user.name "automated"
-      git add build.gradle
-      git commit -m "[skip ci]"
-      git push origin master
+  script: |
+    git config --global user.email "kesavarapu.siva@gmail.com"
+    git config --global user.name "automated"
+    git add build.gradle
+    git commit -m "[skip ci]"
+    git push origin master
