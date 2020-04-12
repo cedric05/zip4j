@@ -17,7 +17,7 @@ group 'com.codebuds'
 archivesBaseName = 'zip4j'
 
 def mainVersion = '0.1'
-def buildNumber = '4'
+def buildNumber = '5'
 
 version = "${mainVersion}.${buildNumber}"
 def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN") ?: ""
