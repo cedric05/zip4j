@@ -39,8 +39,7 @@ steps:
     assets: |
       build/libs/*
       build/distributions/*
-- task:
-  script: |
+- script: |
     git config --global user.email "kesavarapu.siva@gmail.com"
     git config --global user.name "automated"
     git add build.gradle
