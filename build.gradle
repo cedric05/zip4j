@@ -17,7 +17,7 @@ group 'com.codebuds'
 archivesBaseName = 'zip4j'
 
 def mainVersion = '0.1'
-def buildNumber = '0'
+def buildNumber = '3'
 
 version = "${mainVersion}.${buildNumber}"
 def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN") ?: ""
@@ -43,7 +43,6 @@ githubRelease {
     token oauthtoken
     owner "cedric05"
     repo "zip4j"
-    tagName "v1.0.0" // by default this is set to "v${project.version}"
     targetCommitish "master" // by default this is set to "master"
     releaseAssets "$buildDir/libs"
     overwrite false
