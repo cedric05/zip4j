@@ -25,20 +25,9 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build srcZip publish increment'
+    tasks: 'build srcZip publish githubRelease increment'
   env:
     TOKEN: $(github-publish-token)
-- task: GithubRelease@0 
-  displayName: 'Create GitHub Release'      
-  inputs:
-    gitHubConnection: cedric05
-    repositoryName: cedric05/zip4j
-    action: create
-    tagSource: auto
-    tag: $(zip4jversion)
-    assets: |
-      build/libs/*
-      build/distributions/*
 - script: |
     git config --global user.email "kesavarapu.siva@gmail.com"
     git config --global user.name "automated"

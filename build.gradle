@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id "com.github.breadmoirai.github-release" version "2.2.12"
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -19,7 +20,7 @@ def mainVersion = '0.1'
 def buildNumber = '0'
 
 version = "${mainVersion}.${buildNumber}"
-
+def oauthtoken = project.findProperty("gpr.key") ?: System.getenv("TOKEN", "")
 
 publishing {
     repositories {
@@ -28,7 +29,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/cedric05/zip4j")
             credentials {
                 username = project.findProperty("gpr.user")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+                password = oauthtoken
             }
         }
     }
@@ -37,6 +38,17 @@ publishing {
             from(components.java)
         }
     }
+}
+
+githubRelease {
+    token oauthtoken
+    owner "cedric05" 
+    repo "zip4j" 
+    tagName "v1.0.0" // by default this is set to "v${project.version}"
+    targetCommitish "master" // by default this is set to "master"
+    releaseAssets "$buildDir/libs"
+    overwrite false
+    dryRun true
 }
 
 
@@ -50,6 +62,7 @@ test {
 task srcZip(type: Zip) {
     classifier = 'src'
     from sourceSets*.allSource
+    destinationDirectory = file("$buildDir/libs")
 }
 
 task increment {
